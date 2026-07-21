@@ -1,0 +1,162 @@
+import { useState } from "react";
+import axios from "axios";
+import "./App.css";
+
+import VerdictCard from "./components/VerdictCard";
+import HeaderCard from "./components/HeaderCard";
+import AuthenticationCard from "./components/AuthenticationCard";
+import RiskCard from "./components/RiskCard";
+import GeoCard from "./components/GeoCard";
+
+function App() {
+  const [header, setHeader] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // Analyze pasted headers
+  const handleAnalyze = async () => {
+    if (!header.trim()) return;
+
+    setLoading(true);
+    setResult(null);
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/analyze",
+        {
+          header: header.trim(),
+        }
+      );
+
+      setResult(response.data);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to analyze email headers.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Select .eml file
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) {
+      setSelectedFile(null);
+      return;
+    }
+
+    if (!file.name.toLowerCase().endsWith(".eml")) {
+      alert("Please select a valid .eml file.");
+      e.target.value = "";
+      return;
+    }
+
+    setSelectedFile(file);
+  };
+
+  // Upload .eml file
+  const handleFileUpload = async () => {
+    if (!selectedFile) return;
+
+    setLoading(true);
+    setResult(null);
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/analyze-file",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      setResult(response.data);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to analyze .eml file.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="container">
+      <h1>The Email Detective</h1>
+
+      <h2>Paste Email Headers</h2>
+
+      <textarea
+        placeholder="Paste the email header here..."
+        value={header}
+        onChange={(e) => setHeader(e.target.value)}
+      />
+
+      <button
+        onClick={handleAnalyze}
+        disabled={!header.trim() || loading}
+      >
+        {loading ? "Analyzing..." : "Analyze Headers"}
+      </button>
+
+      <div className="divider">
+        <span>OR</span>
+      </div>
+
+      <h2>Upload .eml File</h2>
+
+      <input
+        type="file"
+        accept=".eml"
+        onChange={handleFileChange}
+      />
+
+      {selectedFile && (
+        <p className="selected-file">
+          📄 {selectedFile.name}
+        </p>
+      )}
+
+      <button
+        onClick={handleFileUpload}
+        disabled={!selectedFile || loading}
+      >
+        {loading ? "Uploading..." : "Analyze .eml File"}
+      </button>
+
+      {result && (
+        <>
+          <VerdictCard
+            risk={result.risk}
+            authentication={result.authentication}
+            geo={result.geo}
+          />
+
+          <div className="dashboard">
+            <HeaderCard headers={result.headers} />
+
+            <AuthenticationCard
+              authentication={result.authentication}
+            />
+
+            <RiskCard
+              risk={result.risk}
+            />
+
+            <GeoCard
+              geo={result.geo}
+            />
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default App;
