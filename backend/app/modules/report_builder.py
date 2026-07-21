@@ -4,6 +4,7 @@ from app.modules.dkim_checker import check_dkim
 from app.modules.dmarc_checker import check_dmarc
 from app.modules.risk_engine import calculate_risk
 from app.modules.geo_locator import lookup_ip
+from app.modules.route_parser import extract_route
 
 
 def build_report(header: str):
@@ -15,14 +16,14 @@ def build_report(header: str):
             "to": parsed.get("to"),
             "subject": parsed.get("subject"),
             "date": parsed.get("date"),
-            "received": parsed.get("received", [])
+            "received": parsed.get("received", []),
         },
         "sender_ips": parsed.get("sender_ips", []),
         "authentication": {
             "spf": check_spf(parsed),
             "dkim": check_dkim(parsed),
-            "dmarc": check_dmarc(parsed)
-        }
+            "dmarc": check_dmarc(parsed),
+        },
     }
 
     report["risk"] = calculate_risk(report)
@@ -31,5 +32,8 @@ def build_report(header: str):
         lookup_ip(ip)
         for ip in report["sender_ips"]
     ]
+
+    # NEW
+    report["route"] = extract_route(parsed)
 
     return report
