@@ -30,3 +30,16 @@ def lookup_ip(ip):
             "city": "Unknown",
             "isp": "Unknown"
         }
+
+
+def locate_ips(ip_list):
+    """
+    Look up multiple public IP addresses.
+    """
+
+    results = []
+
+    for ip in ip_list:
+        results.append(lookup_ip(ip))
+
+    return results

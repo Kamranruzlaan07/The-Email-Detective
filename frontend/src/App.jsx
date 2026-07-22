@@ -7,6 +7,8 @@ import HeaderCard from "./components/HeaderCard";
 import AuthenticationCard from "./components/AuthenticationCard";
 import RiskCard from "./components/RiskCard";
 import GeoCard from "./components/GeoCard";
+import ProviderCard from "./components/ProviderCard";
+import TrustCard from "./components/TrustCard";
 
 function App() {
   const [header, setHeader] = useState("");
@@ -14,7 +16,6 @@ function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Analyze pasted headers
   const handleAnalyze = async () => {
     if (!header.trim()) return;
 
@@ -29,6 +30,8 @@ function App() {
         }
       );
 
+      console.log(response.data);
+
       setResult(response.data);
     } catch (error) {
       console.error(error);
@@ -38,7 +41,6 @@ function App() {
     }
   };
 
-  // Select .eml file
   const handleFileChange = (e) => {
     const file = e.target.files[0];
 
@@ -56,7 +58,6 @@ function App() {
     setSelectedFile(file);
   };
 
-  // Upload .eml file
   const handleFileUpload = async () => {
     if (!selectedFile) return;
 
@@ -76,6 +77,8 @@ function App() {
           },
         }
       );
+
+      console.log(response.data);
 
       setResult(response.data);
     } catch (error) {
@@ -136,6 +139,7 @@ function App() {
             risk={result.risk}
             authentication={result.authentication}
             geo={result.geo}
+            trust={result.trust}
           />
 
           <div className="dashboard">
@@ -145,13 +149,13 @@ function App() {
               authentication={result.authentication}
             />
 
-            <RiskCard
-              risk={result.risk}
-            />
+            <RiskCard risk={result.risk} />
 
-            <GeoCard
-              geo={result.geo}
-            />
+            <GeoCard geo={result.geo} />
+
+            <ProviderCard provider={result.provider} />
+
+            <TrustCard trust={result.trust} />
           </div>
         </>
       )}

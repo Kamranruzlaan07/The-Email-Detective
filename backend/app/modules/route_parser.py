@@ -1,12 +1,10 @@
 import re
 
 
-def extract_route(headers):
+def parse_route(received_headers):
     """
-    Extract the route taken by the email using all Received headers.
+    Parse all Received headers into an ordered mail route.
     """
-
-    received_headers = headers.get("received", [])
 
     if isinstance(received_headers, str):
         received_headers = [received_headers]
@@ -17,7 +15,11 @@ def extract_route(headers):
 
         ip_match = re.search(r"\[([\d\.]+)\]", header)
 
-        host_match = re.search(r"from\s+([^\s\(]+)", header, re.IGNORECASE)
+        host_match = re.search(
+            r"from\s+([^\s\(]+)",
+            header,
+            re.IGNORECASE,
+        )
 
         route.append(
             {

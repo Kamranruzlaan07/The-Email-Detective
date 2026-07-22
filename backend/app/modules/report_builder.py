@@ -3,37 +3,36 @@ from app.modules.spf_checker import check_spf
 from app.modules.dkim_checker import check_dkim
 from app.modules.dmarc_checker import check_dmarc
 from app.modules.risk_engine import calculate_risk
-from app.modules.geo_locator import lookup_ip
-from app.modules.route_parser import extract_route
+from app.modules.geo_locator import locate_ips
+from app.modules.route_parser import parse_route
+from app.modules.provider_detector import detect_provider
+from app.modules.trust_engine import calculate_trust
 
 
-def build_report(header: str):
-    parsed = parse_header(header)
+def build_report(raw_headers: str):
+    parsed = parse_header(raw_headers)
 
-    report = {
-        "headers": {
-            "from": parsed.get("from"),
-            "to": parsed.get("to"),
-            "subject": parsed.get("subject"),
-            "date": parsed.get("date"),
-            "received": parsed.get("received", []),
-        },
-        "sender_ips": parsed.get("sender_ips", []),
-        "authentication": {
-            "spf": check_spf(parsed),
-            "dkim": check_dkim(parsed),
-            "dmarc": check_dmarc(parsed),
-        },
+    authentication = {
+        "spf": check_spf(parsed),
+        "dkim": check_dkim(parsed),
+        "dmarc": check_dmarc(parsed),
     }
 
-    report["risk"] = calculate_risk(report)
+    risk = calculate_risk(authentication)
 
-    report["geo"] = [
-        lookup_ip(ip)
-        for ip in report["sender_ips"]
-    ]
+    provider = detect_provider(parsed.get("received", []))
 
-    # NEW
-    report["route"] = extract_route(parsed)
+    report = {
+        "headers": parsed,
+        "sender_ips": parsed.get("sender_ips", []),
+        "authentication": authentication,
+        "risk": risk,
+        "geo": locate_ips(parsed.get("sender_ips", [])),
+        "route": parse_route(parsed.get("received", [])),
+        "provider": provider,
+    }
+
+    # Calculate overall trust score
+    report["trust"] = calculate_trust(report)
 
     return report

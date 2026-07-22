@@ -1,15 +1,16 @@
-function VerdictCard({ risk, authentication, geo }) {
-  const score = risk.score || 0;
+function VerdictCard({ authentication, geo, trust }) {
+  const score = trust?.score ?? 0;
+  const rating = trust?.rating ?? "Unknown";
 
   let verdict = "🟢 Safe Email";
   let barColor = "low";
 
-  if (risk.level === "Medium") {
+  if (score < 90) {
     verdict = "🟡 Suspicious Email";
     barColor = "medium";
   }
 
-  if (risk.level === "High") {
+  if (score < 60) {
     verdict = "🔴 High Risk Email";
     barColor = "high";
   }
@@ -23,13 +24,30 @@ function VerdictCard({ risk, authentication, geo }) {
       <div className="progress">
         <div
           className={`progress-fill ${barColor}`}
-          style={{ width: `${score}%` }}
+          style={{
+            width: `${score}%`,
+          }}
         />
       </div>
 
-      <p>
-        <strong>{score}</strong> / 100
-      </p>
+      <h1
+        style={{
+          fontSize: "3rem",
+          margin: "15px 0 5px",
+          color: "#58a6ff",
+        }}
+      >
+        {score}/100
+      </h1>
+
+      <h3
+        style={{
+          color: "#58a6ff",
+          marginTop: 0,
+        }}
+      >
+        {rating}
+      </h3>
 
       <hr />
 
