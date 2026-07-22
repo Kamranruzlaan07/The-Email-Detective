@@ -10,6 +10,9 @@ import GeoCard from "./components/GeoCard";
 import ProviderCard from "./components/ProviderCard";
 import TrustCard from "./components/TrustCard";
 
+const API_URL =
+  import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
 function App() {
   const [header, setHeader] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -24,13 +27,11 @@ function App() {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/analyze",
+        `${API_URL}/analyze`,
         {
           header: header.trim(),
         }
       );
-
-      console.log(response.data);
 
       setResult(response.data);
     } catch (error) {
@@ -69,7 +70,7 @@ function App() {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/analyze-file",
+        `${API_URL}/analyze-file`,
         formData,
         {
           headers: {
@@ -77,8 +78,6 @@ function App() {
           },
         }
       );
-
-      console.log(response.data);
 
       setResult(response.data);
     } catch (error) {
