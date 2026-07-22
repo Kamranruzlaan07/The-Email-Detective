@@ -4,13 +4,19 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.schemas.email import EmailHeaderRequest
 from app.modules.report_builder import build_report
 
-app = FastAPI(title="The Email Detective")
 
+app = FastAPI(
+    title="The Email Detective"
+)
+
+
+# CORS Configuration
+# Allows local development and production Vercel frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",          # Local development
-        "https://your-vercel-app.vercel.app",  # Replace with your actual Vercel URL
+        "http://localhost:5173",
+        "https://the-email-detective.vercel.app",
     ],
     allow_credentials=False,
     allow_methods=["*"],
@@ -18,13 +24,27 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+def root():
+    return {
+        "message": "The Email Detective API is running"
+    }
+
+
 @app.post("/analyze")
 def analyze_email(request: EmailHeaderRequest):
+    """
+    Analyze raw email headers.
+    """
     return build_report(request.header)
 
 
 @app.post("/analyze-file")
 async def analyze_file(file: UploadFile = File(...)):
+    """
+    Analyze uploaded .eml files.
+    """
+
     content = await file.read()
 
     try:
