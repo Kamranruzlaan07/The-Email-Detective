@@ -26,12 +26,9 @@ function App() {
     setResult(null);
 
     try {
-      const response = await axios.post(
-        `${API_URL}/analyze`,
-        {
-          header: header.trim(),
-        }
-      );
+      const response = await axios.post(`${API_URL}/analyze`, {
+        header: header.trim(),
+      });
 
       setResult(response.data);
     } catch (error) {
@@ -158,6 +155,12 @@ function App() {
           </div>
         </>
       )}
+
+      <footer className="footer">
+        <p><strong>The Email Detective</strong> v1.0</p>
+        <p>Created by Kamran</p>
+        <p>React • FastAPI • Email Security Analysis</p>
+      </footer>
     </div>
   );
 }

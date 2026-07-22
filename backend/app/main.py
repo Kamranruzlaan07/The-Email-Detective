@@ -8,8 +8,11 @@ app = FastAPI(title="The Email Detective")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=[
+        "http://localhost:5173",          # Local development
+        "https://your-vercel-app.vercel.app",  # Replace with your actual Vercel URL
+    ],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

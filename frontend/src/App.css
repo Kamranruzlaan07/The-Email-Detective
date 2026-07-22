@@ -26,8 +26,13 @@ body {
 h1 {
   text-align: center;
   color: #60a5fa;
-  margin-bottom: 30px;
-  font-size: 38px;
+  margin-bottom: 10px;
+  font-size: 40px;
+}
+
+h2 {
+  color: #dbeafe;
+  margin-top: 30px;
 }
 
 /* ==========================================
@@ -44,17 +49,34 @@ textarea {
   color: white;
   font-size: 15px;
   resize: vertical;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 textarea:focus {
   outline: none;
   border-color: #3b82f6;
-  box-shadow: 0 0 10px rgba(59,130,246,.35);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.35);
 }
 
 /* ==========================================
-   BUTTON
+   FILE INPUT
+========================================== */
+
+input[type="file"] {
+  display: block;
+  margin: 15px auto;
+  color: white;
+}
+
+.selected-file {
+  text-align: center;
+  color: #93c5fd;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* ==========================================
+   BUTTONS
 ========================================== */
 
 button {
@@ -68,16 +90,45 @@ button {
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  transition: .3s;
+  transition: 0.25s ease;
 }
 
-button:hover {
+button:hover:not(:disabled) {
   background: #1d4ed8;
   transform: translateY(-2px);
 }
 
-button:active {
-  transform: scale(.98);
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  background: #4b5563;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ==========================================
+   DIVIDER
+========================================== */
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #374151;
+}
+
+.divider span {
+  margin: 0 15px;
+  color: #9ca3af;
+  font-weight: bold;
 }
 
 /* ==========================================
@@ -88,6 +139,7 @@ button:active {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
   gap: 22px;
+  margin-top: 30px;
 }
 
 /* ==========================================
@@ -99,9 +151,9 @@ button:active {
   border-radius: 14px;
   padding: 22px;
   border-left: 5px solid #3b82f6;
-  box-shadow: 0 10px 25px rgba(0,0,0,.35);
-  transition: .3s;
-  animation: fadeIn .4s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  transition: 0.25s ease;
+  animation: fadeIn 0.4s ease;
 }
 
 .card:hover {
@@ -147,7 +199,7 @@ button:active {
 }
 
 .verdict-card h2 {
-  font-size: 28px;
+  font-size: 30px;
 }
 
 .verdict-card h3 {
@@ -169,7 +221,7 @@ button:active {
 
 .progress-fill {
   height: 100%;
-  transition: width 1s ease-in-out;
+  transition: width 0.8s ease-in-out;
 }
 
 .progress-fill.low {
@@ -223,11 +275,31 @@ button:active {
 }
 
 /* ==========================================
+   FOOTER
+========================================== */
+
+.footer {
+  margin-top: 60px;
+  padding: 25px 0;
+  text-align: center;
+  border-top: 1px solid #374151;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.footer p {
+  margin: 6px 0;
+}
+
+.footer strong {
+  color: #60a5fa;
+}
+
+/* ==========================================
    ANIMATION
 ========================================== */
 
 @keyframes fadeIn {
-
   from {
     opacity: 0;
     transform: translateY(15px);
@@ -237,7 +309,6 @@ button:active {
     opacity: 1;
     transform: translateY(0);
   }
-
 }
 
 /* ==========================================
@@ -245,17 +316,27 @@ button:active {
 ========================================== */
 
 @media (max-width: 900px) {
-
   .dashboard {
     grid-template-columns: 1fr;
   }
 
   h1 {
-    font-size: 30px;
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 22px;
   }
 
   textarea {
     height: 180px;
   }
 
+  button {
+    width: 100%;
+  }
+
+  .container {
+    width: 95%;
+  }
 }

@@ -6,45 +6,75 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)
 ![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-Build-646CFF?logo=vite&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+![MIT License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
 
-## 📖 Overview
+# 🌐 Live Demo
 
-The Email Detective is a modern email investigation platform designed for Microsoft 365 administrators, SOC analysts, security engineers, and IT professionals.
+### 🚀 Application
 
-The application analyzes raw email headers and `.eml` files to verify sender authenticity, inspect authentication records, reconstruct message routes, identify sending providers, geolocate sender IP addresses, assess security risks, and calculate an overall Trust Score.
+**Frontend:** https://the-email-detective.vercel.app/
 
-The project demonstrates full-stack development using Python, FastAPI, React, and modern web technologies.
+### ⚙️ Backend API
+
+**Render:** https://the-email-detective-api.onrender.com/
+
+### 💻 GitHub Repository
+
+https://github.com/Kamranruzlaan07/The-Email-Detective
 
 ---
 
-## ✨ Features
+# 📖 Overview
 
-### 📧 Email Analysis
+The Email Detective is a modern full-stack email investigation platform designed for Microsoft 365 administrators, SOC analysts, cybersecurity professionals, and IT support engineers.
+
+The application analyzes raw email headers and uploaded `.eml` files to:
+
+- Verify sender authenticity
+- Validate SPF, DKIM, and DMARC authentication
+- Detect the sending email provider
+- Geolocate sender IP addresses
+- Reconstruct email delivery routes
+- Assess security risks
+- Generate an overall Trust Score (0–100)
+
+This project demonstrates modern full-stack development using **Python**, **FastAPI**, **React**, **REST APIs**, and cloud deployment with **Render** and **Vercel**.
+
+---
+
+# ✨ Features
+
+## 📧 Email Analysis
 
 - Analyze raw email headers
 - Upload and inspect `.eml` files
 - MIME Subject decoding
 - RFC-compliant header parsing
 
-### 🔐 Email Authentication
+---
 
-- SPF validation
-- DKIM validation
-- DMARC validation
+## 🔐 Email Authentication
 
-### 🔍 Investigation
+- SPF Validation
+- DKIM Validation
+- DMARC Validation
 
-- Public IP detection
-- Sender IP geolocation
-- Email route reconstruction
-- Provider detection
-- Risk assessment engine
+---
+
+## 🔍 Email Investigation
+
+- Public IP Detection
+- Sender IP Geolocation
+- Email Route Reconstruction
+- Provider Detection
+- Risk Assessment Engine
 - Trust Score (0–100)
 
-### 🎨 Interactive Dashboard
+---
+
+## 📊 Interactive Dashboard
 
 - Email Verdict
 - Header Details
@@ -56,52 +86,106 @@ The project demonstrates full-stack development using Python, FastAPI, React, an
 
 ---
 
-## 🏗 Architecture
+# 📸 Screenshots
 
-```
-React + Vite
-      │
-      ▼
- FastAPI REST API
-      │
-      ▼
-──────────────────────────
- Header Parser
- SPF Checker
- DKIM Checker
- DMARC Checker
- Route Parser
- Geo Locator
- Provider Detector
- IP Validator
- Risk Engine
- Trust Engine
- Report Builder
-──────────────────────────
+## 🏠 Home
+
+![Home](screenshots/home.png)
+
+---
+
+## 📊 Analysis Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+---
+
+## 🔐 Authentication
+
+![Authentication](screenshots/authentication.png)
+
+---
+
+## 🌍 Geolocation
+
+![Geolocation](screenshots/geo-details.png)
+
+---
+
+## ⭐ Trust Score
+
+![Trust Score](screenshots/trust-score.png)
+
+---
+
+# 🏗️ Architecture
+
+```text
+                     React + Vite
+                           │
+                           ▼
+                    FastAPI REST API
+                           │
+        ┌──────────────────┴──────────────────┐
+        │                                     │
+ Header Parser                        Report Builder
+        │
+        ├── SPF Checker
+        ├── DKIM Checker
+        ├── DMARC Checker
+        ├── Route Parser
+        ├── Geo Locator
+        ├── Provider Detector
+        ├── IP Validator
+        ├── Risk Engine
+        └── Trust Engine
 ```
 
 ---
 
-## 🛠 Tech Stack
+# 🛠️ Technology Stack
 
-### Backend
+## Backend
 
-- Python
+- Python 3.11+
 - FastAPI
 - Uvicorn
 - Pydantic
 
-### Frontend
+## Frontend
 
 - React
 - Vite
 - Axios
 
+## Deployment
+
+- Vercel
+- Render
+
+## Version Control
+
+- Git
+- GitHub
+
 ---
 
-## 📁 Project Structure
+# 🎯 Intended Audience
 
-```
+The Email Detective is designed for:
+
+- Microsoft 365 Administrators
+- SOC Analysts
+- Security Engineers
+- Incident Responders
+- Help Desk Engineers
+- Cybersecurity Students
+
+---
+
+# 📁 Project Structure
+
+```text
 The-Email-Detective/
 │
 ├── backend/
@@ -120,6 +204,7 @@ The-Email-Detective/
 │       │   ├── risk_engine.py
 │       │   ├── trust_engine.py
 │       │   └── report_builder.py
+│       │
 │       └── main.py
 │
 ├── frontend/
@@ -128,26 +213,35 @@ The-Email-Detective/
 │       ├── App.jsx
 │       └── main.jsx
 │
+├── screenshots/
+│   ├── home.png
+│   ├── dashboard.png
+│   ├── authentication.png
+│   ├── geo-details.png
+│   └── trust-score.png
+│
 ├── docs/
 ├── samples/
 ├── tests/
+├── LICENSE
 └── README.md
 ```
 
 ---
 
-## 🚀 Getting Started
+# 🚀 Getting Started
 
-### Clone the repository
+## Clone Repository
 
 ```bash
-git clone https://github.com/<your-username>/The-Email-Detective.git
+git clone https://github.com/Kamranruzlaan07/The-Email-Detective.git
+
 cd The-Email-Detective
 ```
 
 ---
 
-### Backend
+## Backend Setup
 
 ```bash
 cd backend
@@ -165,13 +259,13 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-The backend will run at:
+Backend:
 
 ```
 http://127.0.0.1:8000
 ```
 
-Swagger documentation:
+Swagger Documentation:
 
 ```
 http://127.0.0.1:8000/docs
@@ -179,7 +273,7 @@ http://127.0.0.1:8000/docs
 
 ---
 
-### Frontend
+## Frontend Setup
 
 ```bash
 cd frontend
@@ -189,7 +283,7 @@ npm install
 npm run dev
 ```
 
-The frontend will run at:
+Frontend:
 
 ```
 http://localhost:5173
@@ -197,77 +291,101 @@ http://localhost:5173
 
 ---
 
-## 📡 API
+# 📡 API Endpoints
 
 | Method | Endpoint | Description |
 |---------|----------|-------------|
-| POST | `/analyze-header` | Analyze raw email headers |
-| POST | `/analyze-eml` | Analyze uploaded `.eml` files |
+| POST | `/analyze` | Analyze raw email headers |
+| POST | `/analyze-file` | Analyze uploaded `.eml` files |
 
 ---
 
-## 📸 Screenshots
+# 🚀 Deployment
 
-### Dashboard
+## Frontend
 
-> Add screenshot after deployment
-
-### Trust Score
-
-> Add screenshot after deployment
-
-### Email Analysis
-
-> Add screenshot after deployment
-
----
-
-## 🚀 Deployment
-
-### Frontend
-
-- Vercel
+- **Platform:** Vercel
+- **URL:** https://the-email-detective.vercel.app/
 
 ### Backend
 
-- Render
+- **Platform:** Render
+- **URL:** https://the-email-detective-api.onrender.com/
 
 ---
 
-## 🗺 Roadmap
+# 📚 Key Learning Outcomes
 
-### ✅ Version 1.0
+This project demonstrates experience with:
 
-- Header parsing
-- MIME decoding
-- SPF validation
-- DKIM validation
-- DMARC validation
-- Route analysis
-- Provider detection
-- IP geolocation
-- Risk assessment
-- Trust Score engine
-- React dashboard
+- Full-stack application development
+- REST API development using FastAPI
+- React component-based UI development
+- Email authentication technologies (SPF, DKIM, DMARC)
+- IP geolocation and provider detection
+- Risk scoring and trust evaluation
+- File upload handling
+- Axios API integration
+- Git & GitHub version control
+- Cloud deployment using Render and Vercel
 
-### 🔜 Future Improvements
+---
+
+# 🗺️ Roadmap
+
+## ✅ Version 1.0
+
+- Header Parsing
+- MIME Decoding
+- SPF Validation
+- DKIM Validation
+- DMARC Validation
+- Route Analysis
+- Provider Detection
+- IP Geolocation
+- Risk Assessment
+- Trust Score Engine
+- React Dashboard
+- `.eml` File Upload
+- Cloud Deployment
+
+---
+
+## 🔮 Future Enhancements
 
 - PDF report export
 - AI-assisted phishing explanations
-- URL reputation checks
-- Attachment analysis
+- URL reputation analysis
+- Attachment metadata inspection
 - Threat intelligence integration
+- User authentication
+- Analysis history
 
 ---
 
-## 👨‍💻 Author
+# 👨‍💻 Author
 
-**Kamran**
+## Kamran
 
-Built as a portfolio project demonstrating full-stack software development, REST API design, email security analysis, and modern React application development.
+Created as a portfolio project demonstrating:
+
+- Full-stack software development
+- Email security analysis
+- REST API design
+- React application development
+- Cloud deployment
+- Cybersecurity-focused engineering
+
+GitHub: https://github.com/Kamranruzlaan07
 
 ---
 
-## 📄 License
+# 📄 License
 
 This project is licensed under the MIT License.
+
+---
+
+# ⭐ Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub.
